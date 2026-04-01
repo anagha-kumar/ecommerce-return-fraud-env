@@ -4,9 +4,10 @@ from openenv.core.env_server import Environment
 from models import ReturnAction, ReturnObservation, ReturnState
 
 
-# 🔹 TASK DATASET
+# TASK DATASET
 TASKS = {
     "easy": [
+        # clear genuine
         {
             "order_price": 500,
             "days_since_delivery": 2,
@@ -19,6 +20,19 @@ TASKS = {
             "label": "genuine"
         },
         {
+            "order_price": 800,
+            "days_since_delivery": 1,
+            "return_reason": "size issue",
+            "customer_return_count": 0,
+            "customer_fraud_score": 0.05,
+            "product_category": "clothing",
+            "delivery_confirmed": True,
+            "image_match": True,
+            "label": "genuine"
+        },
+
+        # clear fraud
+        {
             "order_price": 3000,
             "days_since_delivery": 1,
             "return_reason": "wrong item",
@@ -28,9 +42,22 @@ TASKS = {
             "delivery_confirmed": True,
             "image_match": False,
             "label": "fraud"
+        },
+        {
+            "order_price": 7000,
+            "days_since_delivery": 2,
+            "return_reason": "not received",
+            "customer_return_count": 12,
+            "customer_fraud_score": 0.95,
+            "product_category": "electronics",
+            "delivery_confirmed": True,
+            "image_match": False,
+            "label": "fraud"
         }
     ],
+
     "medium": [
+        # borderline fraud score
         {
             "order_price": 2000,
             "days_since_delivery": 5,
@@ -42,19 +69,49 @@ TASKS = {
             "image_match": True,
             "label": "fraud"
         },
+
+        # looks genuine but suspicious history
         {
             "order_price": 2500,
             "days_since_delivery": 3,
             "return_reason": "quality issue",
-            "customer_return_count": 3,
-            "customer_fraud_score": 0.4,
+            "customer_return_count": 6,
+            "customer_fraud_score": 0.45,
+            "product_category": "home",
+            "delivery_confirmed": True,
+            "image_match": True,
+            "label": "fraud"
+        },
+
+        # low fraud score but mismatch
+        {
+            "order_price": 1500,
+            "days_since_delivery": 4,
+            "return_reason": "wrong item",
+            "customer_return_count": 1,
+            "customer_fraud_score": 0.2,
+            "product_category": "fashion",
+            "delivery_confirmed": True,
+            "image_match": False,
+            "label": "fraud"
+        },
+
+        # genuine but slightly risky
+        {
+            "order_price": 1800,
+            "days_since_delivery": 2,
+            "return_reason": "damaged",
+            "customer_return_count": 2,
+            "customer_fraud_score": 0.3,
             "product_category": "home",
             "delivery_confirmed": True,
             "image_match": True,
             "label": "genuine"
         }
     ],
+
     "hard": [
+        # conflicting signals
         {
             "order_price": 10000,
             "days_since_delivery": 3,
@@ -66,20 +123,47 @@ TASKS = {
             "image_match": True,
             "label": "fraud"
         },
+
+        # high value but genuine
         {
-            "order_price": 12000,
-            "days_since_delivery": 2,
-            "return_reason": "not satisfied",
+            "order_price": 15000,
+            "days_since_delivery": 4,
+            "return_reason": "defective",
             "customer_return_count": 1,
-            "customer_fraud_score": 0.7,
+            "customer_fraud_score": 0.35,
             "product_category": "electronics",
             "delivery_confirmed": True,
             "image_match": True,
+            "label": "genuine"
+        },
+
+        # delivery not confirmed (critical signal)
+        {
+            "order_price": 5000,
+            "days_since_delivery": 6,
+            "return_reason": "not received",
+            "customer_return_count": 3,
+            "customer_fraud_score": 0.5,
+            "product_category": "electronics",
+            "delivery_confirmed": False,
+            "image_match": False,
             "label": "fraud"
+        },
+
+        # tricky mixed signals
+        {
+            "order_price": 2200,
+            "days_since_delivery": 3,
+            "return_reason": "not satisfied",
+            "customer_return_count": 4,
+            "customer_fraud_score": 0.5,
+            "product_category": "fashion",
+            "delivery_confirmed": True,
+            "image_match": True,
+            "label": "genuine"
         }
     ]
 }
-
 
 # GRADER
 def grade(decision: str, true_label: str) -> float:
