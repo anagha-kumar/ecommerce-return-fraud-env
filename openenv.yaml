@@ -1,0 +1,3 @@
+name: return_env
+version: "1.0.0"
+description: E-commerce return fraud detection environment with multi-level decision making (APPROVE / REJECT / REVIEW)
