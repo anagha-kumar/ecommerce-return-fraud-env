@@ -1,3 +1,12 @@
+---
+title: Ecommerce Return Fraud Detection Environment
+emoji: "📦"
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 8000
+---
+
 # Ecommerce Return Fraud Detection Environment (OpenEnv)
 
 ## Real-World Motivation
