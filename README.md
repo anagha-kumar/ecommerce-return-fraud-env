@@ -11,7 +11,7 @@ This environment simulates a **real-world return decision system** where an agen
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 Given a return request, the agent must decide:
 
@@ -132,12 +132,12 @@ Average Score: ~0.7
 
 ---
 
-## 🚀 Setup & Usage
+##  Setup & Usage
 
 ### 1. Clone repository
 
 ```
-git clone <your-repo-url>
+git clone https://github.com/anagha-kumar/ecommerce-return-fraud-env.git
 cd return_env
 ```
 
@@ -161,15 +161,9 @@ python inference.py
 
 ---
 
-## 🌐 Deployment
+## Deployment
 
 Deployed on Hugging Face Spaces using Docker.
-
-API Endpoints:
-
-* `/reset`
-* `/step`
-* `/state`
 
 https://huggingface.co/spaces/anagha-kumar/return-fraud-env
 
