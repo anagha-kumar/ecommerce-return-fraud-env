@@ -463,6 +463,3 @@ The REVIEW action, asymmetric rewards, and feature interactions make this a **ch
 ## Author
 
 Anagha Kumar
-
-**Github:** https://github.com/anagha-kumar
-**HuggingFace:** https://huggingface.co/anagha-kumar
