@@ -1,3 +1,51 @@
 name: return_env
 version: "1.0.0"
 description: E-commerce return fraud detection environment with multi-level decision making (APPROVE / REJECT / REVIEW)
+author: Anagha Kumar
+license: BSD
+tags:
+  - e-commerce
+  - fraud-detection
+  - decision-making
+  - multi-agent
+tasks:
+  - name: easy
+    description: Clear fraud/genuine signals
+    difficulty: easy
+  - name: medium
+    description: Moderate ambiguity requiring careful decision-making
+    difficulty: medium
+  - name: hard
+    description: Conflicting signals requiring advanced reasoning
+    difficulty: hard
+action_space:
+  type: object
+  properties:
+    decision:
+      type: string
+      enum: [APPROVE, REJECT, REVIEW]
+observation_space:
+  type: object
+  properties:
+    order_price:
+      type: number
+    days_since_delivery:
+      type: integer
+    return_reason:
+      type: string
+    customer_return_count:
+      type: integer
+    customer_fraud_score:
+      type: number
+    product_category:
+      type: string
+    delivery_confirmed:
+      type: boolean
+    image_match:
+      type: boolean
+    done:
+      type: boolean
+    reward:
+      type: number
+    explanation:
+      type: string

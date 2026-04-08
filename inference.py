@@ -26,13 +26,13 @@ def safe_post(url, payload=None):
         response = requests.post(url, json=payload, timeout=10)
 
         if response.status_code != 200:
-            print("ERROR:", response.status_code)
+            print("ERROR:", response.status_code, flush=True)
             return None
 
         return response.json()
 
     except Exception as e:
-        print("Request failed:", e)
+        print("Request failed:", e, flush=True)
         return None
 
 
@@ -80,12 +80,11 @@ def get_decision(obs):
 
 
 # 🔹 RUN ONE EPISODE
-def run_episode(i):
+def run_episode(task_name, episode_num):
     reset = safe_post(f"{BASE_URL}/reset")
 
     if not reset:
-        print(f"Episode {i}: RESET FAILED")
-        return 0
+        return None
 
     obs = reset["observation"]
 
@@ -97,34 +96,49 @@ def run_episode(i):
     )
 
     if not step:
-        print(f"Episode {i}: STEP FAILED")
-        return 0
+        return None
 
     reward = step.get("reward", 0)
-    explanation = step["observation"].get("explanation", "")
+    return reward
 
-    print(f"\n--- Episode {i} ---")
-    print("Decision:", decision)
-    print("Reward:", reward)
-    print("Explanation:", explanation.strip())
 
-    return reward / 10
+# 🔹 RUN TASK (multiple episodes, emit structured output)
+def run_task(task_name, num_episodes=5):
+    print(f"[START] task={task_name}", flush=True)
+
+    total_reward = 0
+    step_count = 0
+
+    for episode in range(1, num_episodes + 1):
+        reward = run_episode(task_name, episode)
+
+        if reward is not None:
+            total_reward += reward
+            step_count += 1
+            normalized_reward = reward / 10.0
+            print(f"[STEP] step={step_count} reward={normalized_reward:.2f}", flush=True)
+
+    # Calculate final score (0.0-1.0)
+    final_score = total_reward / (step_count * 10.0) if step_count > 0 else 0.0
+
+    print(f"[END] task={task_name} score={final_score:.2f} steps={step_count}", flush=True)
+
+    return final_score
 
 
 # 🔹 MAIN
 def main():
+    # Run 3 tasks: easy, medium, hard
+    tasks = ["easy", "medium", "hard"]
     scores = []
 
-    for i in range(1, 6):
-        score = run_episode(i)
+    for task_name in tasks:
+        score = run_task(task_name, num_episodes=3)
         scores.append(score)
 
-    avg_score = sum(scores) / len(scores)
-
-    print("\n======================")
-    print("Scores:", scores)
-    print("Average Score:", avg_score)
-    print("======================")
+    # Print final summary
+    avg_score = sum(scores) / len(scores) if scores else 0.0
+    print(f"\nFinal average score: {avg_score:.2f}", flush=True)
 
 
 if __name__ == "__main__":
