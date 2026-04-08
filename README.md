@@ -1,6 +1,5 @@
 ---
 title: Ecommerce Return Fraud Detection Environment
-emoji: "📦"
 colorFrom: blue
 colorTo: purple
 sdk: docker
@@ -47,7 +46,7 @@ This reflects real-world workflows where:
 
 ---
 
-## ⚙️ Observation Space
+## Observation Space
 
 Each return request contains:
 
@@ -173,7 +172,7 @@ python inference.py
 
 ---
 
-## 🐳 Docker Setup & Deployment
+## Docker Setup & Deployment
 
 ### Building the Docker Image
 
@@ -221,7 +220,7 @@ All containers have these variables configured:
 
 ---
 
-## 🚀 HuggingFace Spaces Configuration
+## HuggingFace Spaces Configuration
 
 When deploying to HuggingFace Spaces, configure these **environment secrets** in your Space settings:
 
@@ -244,7 +243,7 @@ When deploying to HuggingFace Spaces, configure these **environment secrets** in
 
 ### How to Set Secrets in HF Spaces
 
-1. Go to your Space settings (⚙️ Settings tab)
+1. Go to your Space settings (Settings tab)
 2. Find "Repository secrets" section
 3. Add each secret:
    - **Name:** `HF_TOKEN`, **Value:** your token
